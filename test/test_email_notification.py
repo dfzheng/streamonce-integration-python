@@ -2,6 +2,7 @@ from test.helper.userHelper import UserHelper
 from test.helper.jiveHelper import jiveHelper
 from test.helper.googleHelper import GoogleHelper
 from test.helper.CheckEmailHelper import CheckEmailHelper
+from test.helper.sendMailHelper import SendEmail
 import datetime
 from time import sleep
 from test.config import env, account
@@ -59,6 +60,40 @@ class EmailNotificationTest(unittest.TestCase):
 
         self.assertEqual(Mail1['Subject'], subject)
         self.assertEqual(Mail2['Subject'], subject)
+        self.assertEqual(Mail4['Subject'], subject)
+        self.assertEqual(Mail5['Subject'], subject)
+
+    def test_shouldSyncEmailToRestOfGroupMember(self):
+        subject = 'Email send to Group Email address ' + datetime.datetime.now().isoformat()
+        # subject = 'Email send to Group Email address 3.141'
+        to = [EmailNotificationTest.groupKey]
+        htmlTitle = "Email send to Group Email"
+        htmlContent = "Current Time : " + datetime.datetime.now().isoformat()
+        # htmlContent = "Current Time : 20161117"
+        HTML = """
+<html>
+<head></head>
+<body>
+    <div><font size="6"> %s </font></div>
+    <div><font size="4"> %s </font></div>
+</body>
+</html>
+""" % (htmlTitle, htmlContent)
+
+        SendEmail(Subject=subject, From=account["User2"], HTML=HTML, To=to)
+        sleep(120)
+        content = jiveHelper.findContentBySubject(subject)
+
+        self.assertNotEqual(content, None, "Could not find Content")
+        self.assertEqual(content['subject'], subject, 'content title not matched')
+
+        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
+        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
+        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
+        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)
+
+        self.assertEqual(Mail1['Subject'], subject)
+        self.assertEqual(Mail2, None)
         self.assertEqual(Mail4['Subject'], subject)
         self.assertEqual(Mail5['Subject'], subject)
 

@@ -17,7 +17,7 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
     if len(To) == 0:
         raise Exception("no reciever")
 
-    print('Sending mail From: %d , Subject: %s' % (From["email"], Subject))
+    print('Sending mail From: %s , Subject: %s' % (From["email"], Subject))
 
     To = ", ".join(To)
 
@@ -27,8 +27,13 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
     msg['To'] = To
     msg.preamble = Preamble
 
-    msg.attach(MIMEText(TEXT, 'plain', 'utf-8'))
-    msg.attach(MIMEText(HTML, 'html', 'utf-8'))
+    if len(TEXT) > 0:
+        msg.attach(MIMEText(TEXT, 'plain', 'utf-8'))
+    if len(HTML) > 0:
+        msg.attach(MIMEText(HTML, 'html', 'utf-8'))
+
+    if len(TEXT) == 0 and len(HTML) == 0:
+        msg.attach(MIMEText("Empty Email", 'plain', 'utf-8'))
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()

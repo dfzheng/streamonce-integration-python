@@ -17,6 +17,13 @@ BasicAuth=HTTPBasicAuth(account["jiveAdmin"]["username"], account["jiveAdmin"]["
 
 class jiveHelper:
     @staticmethod
+    def isOnlyResult(response):
+        if len(response.json()["list"]) != 1:
+            return False
+        else :
+            return True
+
+    @staticmethod
     def getGroupByName(groupName):
         url = env["jive"]["apiBaseUrl"] + '/search/places?filter=search({0})&filter=nameonly'.format(groupName)
         r = requests.get(url, auth=BasicAuth)
@@ -101,6 +108,18 @@ class jiveHelper:
         contents = r.json()['list']
         return r.json()
 
+    @staticmethod
+    def findContentBySubject(contentSubject):
+        url = apiUrl + "/search/contents?filter=search('%s')&filter=subjectonly(true)" % (contentSubject)
+        r = requests.get(url, auth=BasicAuth)
+        assert r.status_code == 200
+        if not jiveHelper.isOnlyResult(r):
+            print('findContentBySubject has no result or more than one')
+            return None
+        return r.json()['list'][0]
+
+
+
 if __name__ == "__main__":
     groupName = 'streamonceintegrationtest4'
     place = jiveHelper.createGroup(groupName)
@@ -109,3 +128,5 @@ if __name__ == "__main__":
     jiveHelper.deleteGroupByPlaceID(place["placeID"])
     print(jiveHelper.createContent(groupName="streamonceintegrationtest4", user=account['User2'], title='SP 1'))
     r = jiveHelper.getGroupContents(groupName)
+
+    r = jiveHelper.findContentBySubject("Email send to Group Email address 3.131415")
