@@ -1,0 +1,52 @@
+{
+  "jiveAdmin": {
+    "username": "",
+    "password": "",
+    "id": "",
+    "displayName": ""
+  },
+  "GoogleAdmin": {
+    "username": "",
+    "password": ""
+  },
+  "User1":{
+    "username": "",
+    "email": "",
+    "password": "",
+    "twoStep": "",
+    "id": "",
+    "displayName": ""
+  },
+  "User2":{
+    "username": "",
+    "email": "",
+    "password": "",
+    "twoStep": "",
+    "id": "",
+    "displayName": ""
+  },
+  "User3":{
+    "username": "",
+    "email": "",
+    "password": "",
+    "twoStep": "",
+    "id": "",
+    "displayName": ""
+  },
+  "User4":{
+    "username": "",
+    "email": "",
+    "password": "",
+    "twoStep": "",
+    "id": "",
+    "displayName": ""
+  },
+  "User5":{
+    "username": "",
+    "email": "",
+    "password": "",
+    "twoStep": "",
+    "id": "",
+    "displayName": ""
+  }
+}
