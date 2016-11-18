@@ -118,7 +118,33 @@ class jiveHelper:
             return None
         return r.json()['list'][0]
 
+    @staticmethod
+    def findDisussionBySubject(contentSubject):
+        url = apiUrl + "/search/contents?filter=search('%s')&filter=subjectonly(true)" % (contentSubject)
+        r = requests.get(url, auth=BasicAuth)
+        assert r.status_code == 200
+        return r.json()['list']
 
+    @staticmethod
+    def messageOnDiscussion(user, contentID, reply):
+        body = {
+            "content": {"type": "text/html", "text": reply},
+            "type": "message"
+        }
+
+        url = apiUrl + "/messages/contents/" + contentID
+
+        headers = {
+            "Content-Type": "application/json",
+            "X-Jive-Run-As": "userid " + str(user["id"])
+        }
+
+        print(url)
+
+        r = requests.post(url, headers=headers, json=body, auth=BasicAuth)
+        assert r.status_code == 201, str(r.status_code)
+
+        return r.json()
 
 if __name__ == "__main__":
     groupName = 'streamonceintegrationtest4'
@@ -129,4 +155,10 @@ if __name__ == "__main__":
     print(jiveHelper.createContent(groupName="streamonceintegrationtest4", user=account['User2'], title='SP 1'))
     r = jiveHelper.getGroupContents(groupName)
 
-    r = jiveHelper.findContentBySubject("Email send to Group Email address 3.131415")
+    r = jiveHelper.findContentBySubject("SO Test Discussion 1.41")
+    contentID = r["discussion"].split('/')[-1]
+    contentID = "2029"
+    comment = jiveHelper.messageOnDiscussion(account["User1"], contentID, """
+<body><p>comment</p></body>
+""")
+    print(comment)

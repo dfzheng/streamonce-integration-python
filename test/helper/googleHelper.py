@@ -66,7 +66,7 @@ class GoogleHelper():
         return resp
 
 if __name__ == "__main__":
-    groupKey = "streamonceintegrationtest4" + env["google"]["domainName"]
+    groupKey = "streamonceintegrationtest4" + '@' + env["google"]["domainName"]
     memberKey = account["User2"]["email"]
 
     print(GoogleHelper.createGroup(groupKey))
