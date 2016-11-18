@@ -3,8 +3,10 @@ from test.helper.jiveHelper import jiveHelper
 from test.helper.googleHelper import GoogleHelper
 from test.helper.CheckEmailHelper import CheckEmailHelper
 from test.helper.sendMailHelper import SendEmail, ReplyEmail
+from test.helper.utilHelper import *
 import datetime
 from time import sleep
+from xml.sax.saxutils import escape, unescape
 from test.config import env, account
 import unittest
 import pdb
@@ -12,7 +14,7 @@ import re
 
 class EmailNotificationTest(unittest.TestCase):
 
-    groupName = 'streamonceintegrationtest4'
+    groupName = 'streamonceintegrationtest6'
     groupKey = groupName + '@' + env['google']['domainName']
     groupAdmin = account["User1"]
     members = [account["User2"], account["User4"], account["User5"]]
@@ -122,7 +124,7 @@ class EmailNotificationTest(unittest.TestCase):
         jiveHelper.messageOnDiscussion(account["User1"], contentID,
 "<body><h1>Success !</h1><p>%s</p></body>" % (TEXT))
 
-        sleep(120)
+        sleep(180)
 
         User1RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)[-1]
         User2RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)[-1]
@@ -192,7 +194,43 @@ class EmailNotificationTest(unittest.TestCase):
 
         # check comment replyed on Jive
 
-        sleep(120)
+        sleep(180)
 
         discussion = jiveHelper.findDisussionBySubject(subject)
         self.assertIsNotNone(re.search(r'%s' % TEXT, discussion[0]['content']['text']))
+
+
+    def test_shouldSyncSpecialCharsFromJive(self):
+        subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
+        POST_TEXT = "Sample discuss 这是一个有趣的讨论 非常---有趣&nbsp;&nbsp;do you like it ?"
+        POST_CONTENT = "<div> %s </div>" % (POST_TEXT)
+
+        content = jiveHelper.createContent(
+            groupName=EmailNotificationTest.groupName,
+            user=account["User2"],
+            title=subject,
+            text = POST_CONTENT
+        )
+        self.assertEqual(content['subject'], subject, 'Subject not Matched')
+
+        sleep(120)
+
+        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
+        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
+        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
+        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)
+
+        self.assertEqual(Mail1['Subject'], subject)
+        self.assertEqual(Mail2['Subject'], subject)
+        self.assertEqual(Mail4['Subject'], subject)
+        self.assertEqual(Mail5['Subject'], subject)
+
+        MailContent1 = decodeQP(Mail1.get_payload())
+        MailContent2 = decodeQP(Mail2.get_payload())
+        MailContent4 = decodeQP(Mail4.get_payload())
+        MailContent5 = decodeQP(Mail5.get_payload())
+
+        self.assertIsNotNone(re.search(r'%s' % unescape(POST_TEXT), unescape(MailContent1)))
+        self.assertIsNotNone(re.search(r'%s' % unescape(POST_TEXT), unescape(MailContent2)))
+        self.assertIsNotNone(re.search(r'%s' % unescape(POST_TEXT), unescape(MailContent4)))
+        self.assertIsNotNone(re.search(r'%s' % unescape(POST_TEXT), unescape(MailContent5)))
