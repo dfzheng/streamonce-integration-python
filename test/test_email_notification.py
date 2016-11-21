@@ -7,42 +7,18 @@ from test.helper.utilHelper import *
 import datetime
 from time import sleep
 from xml.sax.saxutils import escape, unescape
-from test.config import env, account
+from test.config import env, account, group
 import unittest
 import pdb
 import re
 
 class EmailNotificationTest(unittest.TestCase):
 
-    groupName = 'streamonceintegrationtest6'
-    groupKey = groupName + '@' + env['google']['domainName']
-    groupAdmin = account["User1"]
-    members = [account["User2"], account["User4"], account["User5"]]
-
-    @classmethod
-    def setUpClass(cls):
-        print("beforeAll")
-        UserHelper.startDriver()
-        UserHelper.login(cls.groupAdmin)
-        UserHelper.createGroup(cls.groupName)
-        UserHelper.addMembersToGroup(cls.groupName, cls.members)
-
-    @classmethod
-    def tearDownClass(cls):
-        print("afterAll")
-        UserHelper.stopDriver()
-        jiveGroup = jiveHelper.getGroupByName(cls.groupName)
-
-        if jiveGroup != None:
-            jiveHelper.deleteGroupByPlaceID(jiveGroup["placeID"])
-
-        GoogleHelper.deleteGroup(cls.groupKey)
-
     def test_shouldHaveEmailNotification(self):
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
         # subject = 'SO Test Discussion 884434419'
         content = jiveHelper.createContent(
-            groupName=EmailNotificationTest.groupName,
+            groupName=group['groupName'],
             user=account["User2"],
             title=subject,
             text = """
@@ -56,10 +32,10 @@ class EmailNotificationTest(unittest.TestCase):
 
         sleep(60)
 
-        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
-        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
-        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
-        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)
+        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=group['groupKey'])
+        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=group['groupKey'])
+        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=group['groupKey'])
+        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=group['groupKey'])
 
         self.assertEqual(Mail1['Subject'], subject)
         self.assertEqual(Mail2['Subject'], subject)
@@ -69,7 +45,7 @@ class EmailNotificationTest(unittest.TestCase):
     def test_shouldCreateContentOnJiveAndSyncEmailToRestOfGroupMember(self):
         subject = 'Email send to Group Email address ' + datetime.datetime.now().isoformat()
         # subject = 'Email send to Group Email address 3.141'
-        to = [EmailNotificationTest.groupKey]
+        to = group['groupKey']
         htmlTitle = "Email send to Group Email"
         htmlContent = "Current Time : " + datetime.datetime.now().isoformat()
         # htmlContent = "Current Time : 20161117"
@@ -91,10 +67,10 @@ class EmailNotificationTest(unittest.TestCase):
         self.assertEqual(content['subject'], subject, 'content title not matched')
         self.assertEqual(content['author']['displayName'], account['User2']['displayName'], "Content Creator not correct")
 
-        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
-        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
-        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
-        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)
+        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=group['groupKey'])
+        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=group['groupKey'])
+        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=group['groupKey'])
+        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=group['groupKey'])
 
         self.assertEqual(Mail1['Subject'], subject)
         self.assertEqual(Mail2, None)
@@ -105,7 +81,7 @@ class EmailNotificationTest(unittest.TestCase):
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
         # subject = 'Discussion from Jive 2.2360'
         content = jiveHelper.createContent(
-            groupName=EmailNotificationTest.groupName,
+            groupName=group['groupName'],
             user=account["User2"],
             title=subject,
             text = """
@@ -127,10 +103,10 @@ class EmailNotificationTest(unittest.TestCase):
 
         sleep(180)
 
-        User1RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)[-1]
-        User2RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)[-1]
-        User4RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)[-1]
-        User5RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)[-1]
+        User1RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User1"], subject, to=group['groupKey'])[-1]
+        User2RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User2"], subject, to=group['groupKey'])[-1]
+        User4RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User4"], subject, to=group['groupKey'])[-1]
+        User5RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User5"], subject, to=group['groupKey'])[-1]
 
         textMail1 = User1RecievedMail.get_payload()
         textMail2 = User2RecievedMail.get_payload()
@@ -142,13 +118,12 @@ class EmailNotificationTest(unittest.TestCase):
         self.assertIsNotNone(re.search(r'%s' % TEXT, textMail4))
         self.assertIsNotNone(re.search(r'%s' % TEXT, textMail5))
 
-    @unittest.skip("")
     def test_ShouldSyncCommentFromJive(self):
         # subject = 'Discussion from Jive 2.23'
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
 
         content = jiveHelper.createContent(
-            groupName=EmailNotificationTest.groupName,
+            groupName=group['groupName'],
             user=account["User2"],
             title=subject,
             text = """
@@ -162,7 +137,7 @@ class EmailNotificationTest(unittest.TestCase):
 
         sleep(60)
 
-        topicEmails = CheckEmailHelper.findEmailListBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
+        topicEmails = CheckEmailHelper.findEmailListBySubject(account["User4"], subject, to=group['groupKey'])
 
         original = topicEmails[0]
 
@@ -171,8 +146,8 @@ class EmailNotificationTest(unittest.TestCase):
 
         ReplyEmail(Subject=subject,
                   From=account["User4"],
-                  To=[EmailNotificationTest.groupKey],
-                  ReplyTo=[EmailNotificationTest.groupKey],
+                  To=[group['groupKey']],
+                  ReplyTo=[group['groupKey']],
                   HTML=HTML,
                   Origin=original
                   )
@@ -181,9 +156,9 @@ class EmailNotificationTest(unittest.TestCase):
 
         # check other group members can recieve email reply
 
-        User1RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)[-1]
-        User2RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)[-1]
-        User5RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)[-1]
+        User1RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User1"], subject, to=group['groupKey'])[-1]
+        User2RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User2"], subject, to=group['groupKey'])[-1]
+        User5RecievedMail = CheckEmailHelper.findEmailListBySubject(account["User5"], subject, to=group['groupKey'])[-1]
 
         textMail1 = User1RecievedMail.get_payload()[0].get_payload()
         textMail2 = User2RecievedMail.get_payload()[0].get_payload()
@@ -207,7 +182,7 @@ class EmailNotificationTest(unittest.TestCase):
         POST_CONTENT = "<div> %s </div>" % (POST_TEXT)
 
         content = jiveHelper.createContent(
-            groupName=EmailNotificationTest.groupName,
+            groupName=group['groupName'],
             user=account["User2"],
             title=subject,
             text = POST_CONTENT
@@ -216,10 +191,10 @@ class EmailNotificationTest(unittest.TestCase):
 
         sleep(120)
 
-        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
-        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
-        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=EmailNotificationTest.groupKey)
-        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=EmailNotificationTest.groupKey)
+        Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=group['groupKey'])
+        Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=group['groupKey'])
+        Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=group['groupKey'])
+        Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=group['groupKey'])
 
         self.assertEqual(Mail1['Subject'], subject)
         self.assertEqual(Mail2['Subject'], subject)
