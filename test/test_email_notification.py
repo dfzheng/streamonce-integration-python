@@ -216,7 +216,7 @@ class EmailNotificationTest(unittest.TestCase):
         # subject = 'SO Test Discussion 2016-11-21T11:41:41.284753'
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
         content = jiveHelper.createContent(
-            groupName=EmailNotificationTest.groupName,
+            groupName=group['groupName'],
             user=account["User2"],
             title=subject,
             text="""
