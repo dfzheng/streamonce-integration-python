@@ -66,7 +66,7 @@ class EmailNotificationTest(unittest.TestCase):
         self.assertEqual(Mail4['Subject'], subject)
         self.assertEqual(Mail5['Subject'], subject)
 
-    def test_shouldSyncEmailToRestOfGroupMember(self):
+    def test_shouldCreateContentOnJiveAndSyncEmailToRestOfGroupMember(self):
         subject = 'Email send to Group Email address ' + datetime.datetime.now().isoformat()
         # subject = 'Email send to Group Email address 3.141'
         to = [EmailNotificationTest.groupKey]
@@ -84,11 +84,12 @@ class EmailNotificationTest(unittest.TestCase):
 """ % (htmlTitle, htmlContent)
 
         SendEmail(Subject=subject, From=account["User2"], HTML=HTML, To=to)
-        sleep(120)
+        sleep(180)
         content = jiveHelper.findContentBySubject(subject)
 
         self.assertNotEqual(content, None, "Could not find Content")
         self.assertEqual(content['subject'], subject, 'content title not matched')
+        self.assertEqual(content['author']['displayName'], account['User2']['displayName'], "Content Creator not correct")
 
         Mail1 = CheckEmailHelper.findEmailBySubject(account["User1"], subject, to=EmailNotificationTest.groupKey)
         Mail2 = CheckEmailHelper.findEmailBySubject(account["User2"], subject, to=EmailNotificationTest.groupKey)
