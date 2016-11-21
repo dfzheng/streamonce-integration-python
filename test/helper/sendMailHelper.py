@@ -77,8 +77,6 @@ def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML=
     del html_block['Content-Transfer-Encoding']
     html_block['Content-Transfer-Encoding'] = 'QUOTED-PRINTABLE'
 
-    print(html_block)
-
     text_block = MIMEText(new_text, 'plain', _charset='utf-8')
 
     print('Sending mail From: %s , Subject: %s' % (From["email"], Subject))
@@ -106,8 +104,6 @@ def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML=
     new_block["Subject"] = "Re: "+Origin["Subject"]
     new_block["To"] = new_block["Reply-To"] = Origin["Reply-To"] or Origin["From"]
     new_block["From"] = From["email"]
-
-    print(new_block.as_string())
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()

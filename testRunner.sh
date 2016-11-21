@@ -1,3 +1,3 @@
-# python -c "from testRunner import createEmailTestGroup; createEmailTestGroup()"
+python -c "from testRunnerHelper import createEmailTestGroup; createEmailTestGroup()"
 python -m unittest
-# python -c "from testRunner import deleteEmailTestGroup; deleteEmailTestGroup()"
+python -c "from testRunnerHelper import deleteEmailTestGroup; deleteEmailTestGroup()"

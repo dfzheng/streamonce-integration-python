@@ -9,7 +9,6 @@ from test.helper.utilHelper import decodeQP
 from xml.sax.saxutils import unescape
 
 class SpecialCharsTest(unittest.TestCase):
-    @unittest.skip("")
     def test_shouldSyncSpecialCharsFromJive(self):
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
         # subject = 'SO Test Discussion 6.6'

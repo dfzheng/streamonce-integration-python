@@ -44,7 +44,7 @@ class EmailNotificationTest(unittest.TestCase):
     def xtest_shouldCreateContentOnJiveAndSyncEmailToRestOfGroupMember(self):
         subject = 'Email send to Group Email address ' + datetime.datetime.now().isoformat()
         # subject = 'Email send to Group Email address 3.141'
-        to = group['groupKey']
+        to = [group['groupKey']]
         htmlTitle = "Email send to Group Email"
         htmlContent = "Current Time : " + datetime.datetime.now().isoformat()
         # htmlContent = "Current Time : 20161117"
