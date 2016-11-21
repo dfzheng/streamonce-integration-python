@@ -126,6 +126,25 @@ class jiveHelper:
         return r.json()['list']
 
     @staticmethod
+    def findAllCommentsByContentID(contentID):
+        url = apiUrl + "/messages/contents/%s" % (contentID)
+        allComments = []
+
+        while (url != None):
+            resp = requests.get(url, auth=BasicAuth)
+            assert resp.status_code == 200
+            comments = resp.json()
+            allComments.extend(comments['list'])
+
+            if 'links' in comments and 'next' in comments['links']:
+                url = comments['links']['next']
+            else:
+                url = None
+
+        return sorted(allComments, key=lambda k: k['published'])
+
+
+    @staticmethod
     def messageOnDiscussion(user, contentID, reply):
         body = {
             "content": {"type": "text/html", "text": reply},
