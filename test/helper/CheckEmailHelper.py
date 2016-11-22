@@ -58,6 +58,23 @@ class CheckEmailHelper():
             server.shutdown()
             return messages
 
+    @staticmethod
+    def deleteEmails(user=account["jiveAdmin"], to=""):
+        server = IMAPClient(HOST, use_uid=True, ssl=True, port=993)
+
+        print("Checking Mail of User: %s " % user["username"])
+
+        server.login(user["email"], user["password"])
+
+        server.select_folder('INBOX')
+        inboxMails = server.gmail_search('in:inbox %s' % (to))
+
+        server.select_folder('[Gmail]/Sent Mail')
+        sendMails = server.gmail_search('is:sent %s' % (to))
+
+        inboxMails.extend(sendMails)
+
+        server.delete_messages(inboxMails)
 
 
 if __name__ == "__main__":

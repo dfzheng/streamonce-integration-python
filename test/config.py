@@ -8,7 +8,7 @@ with open(os.getcwd() + '/accounts.json') as json_data:
 
 group = {}
 
-group['groupName'] = 'streamonceintegrationtest7'
+group['groupName'] = 'streamonceintegrationtest1234'
 group['groupKey'] = group['groupName'] + '@' + env['google']['domainName']
 group['groupAdmin'] = account["User1"]
 group['members'] = [account["User2"], account["User4"], account["User5"]]

@@ -2,6 +2,7 @@ from test.config import group
 from test.helper.googleHelper import GoogleHelper
 from test.helper.jiveHelper import jiveHelper
 from test.helper.userHelper import UserHelper
+from test.helper.CheckEmailHelper import CheckEmailHelper
 
 def createEmailTestGroup():
     print('create email test group', group['groupName'])
@@ -20,3 +21,10 @@ def deleteEmailTestGroup():
         jiveHelper.deleteGroupByPlaceID(jiveGroup["placeID"])
 
     GoogleHelper.deleteGroup(group['groupKey'])
+
+    # delete user emails
+    print('delete all test emails', group['groupName'])
+    CheckEmailHelper.deleteEmails(group['groupAdmin'], to=group['groupKey'])
+
+    for member in group['members']:
+        CheckEmailHelper.deleteEmails(member, to=group['groupName'])
