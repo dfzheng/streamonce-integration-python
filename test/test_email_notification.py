@@ -175,3 +175,5 @@ class EmailNotificationTest(unittest.TestCase):
 
         discussion = jiveHelper.findDisussionBySubject(subject)
         self.assertIsNotNone(re.search(r'%s' % TEXT, discussion[0]['content']['text']))
+
+

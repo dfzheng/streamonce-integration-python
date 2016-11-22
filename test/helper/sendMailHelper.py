@@ -57,7 +57,7 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
     server.send_message(msg)
     server.quit()
 
-def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML="", ReplyTo=[], Origin=None):
+def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML="", ReplyTo=[], Origin=None, useAlias=False):
     origin_html = Origin.get_payload()
     reply_html = HTML
     compressed_origin_html = '<div class="gmail_extra"><div class="gmail_quote"><blockquote class="gmail_quote" style="margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">'
@@ -103,7 +103,11 @@ def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML=
     new_block["References"] = Origin["Message-ID"]
     new_block["Subject"] = "Re: "+Origin["Subject"]
     new_block["To"] = new_block["Reply-To"] = Origin["Reply-To"] or Origin["From"]
-    new_block["From"] = From["email"]
+
+    if useAlias==False:
+        new_block["From"] =  From["displayName"] + " <"+From["email"] +">"
+    else:
+        new_block["From"] = From["displayName"] + " <"+From["alias"] +">"
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
