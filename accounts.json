@@ -15,7 +15,8 @@
     "password": "",
     "twoStep": "",
     "id": "",
-    "displayName": ""
+    "displayName": "",
+    "alias": ""
   },
   "User2":{
     "username": "",
@@ -23,7 +24,8 @@
     "password": "",
     "twoStep": "",
     "id": "",
-    "displayName": ""
+    "displayName": "",
+    "alias": ""
   },
   "User3":{
     "username": "",
@@ -31,7 +33,8 @@
     "password": "",
     "twoStep": "",
     "id": "",
-    "displayName": ""
+    "displayName": "",
+    "alias": ""
   },
   "User4":{
     "username": "",
@@ -39,7 +42,8 @@
     "password": "",
     "twoStep": "",
     "id": "",
-    "displayName": ""
+    "displayName": "",
+    "alias": ""
   },
   "User5":{
     "username": "",
@@ -47,6 +51,7 @@
     "password": "",
     "twoStep": "",
     "id": "",
-    "displayName": ""
+    "displayName": "",
+    "alias": ""
   }
 }
