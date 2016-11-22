@@ -41,7 +41,7 @@ class EmailNotificationTest(unittest.TestCase):
         self.assertEqual(Mail4['Subject'], subject)
         self.assertEqual(Mail5['Subject'], subject)
 
-    def xtest_shouldCreateContentOnJiveAndSyncEmailToRestOfGroupMember(self):
+    def test_shouldCreateContentOnJiveAndSyncEmailToRestOfGroupMember(self):
         subject = 'Email send to Group Email address ' + datetime.datetime.now().isoformat()
         # subject = 'Email send to Group Email address 3.141'
         to = [group['groupKey']]
