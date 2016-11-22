@@ -18,7 +18,7 @@ with open(os.getcwd() + '/accounts.json') as json_data:
     account = json.load(json_data)
 
 
-def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamble="", TEXT="", HTML="", ReplyTo=[]):
+def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamble="", TEXT="", HTML="", ReplyTo=[], useAlias=False):
     if len(To) == 0:
         raise Exception("no reciever")
 
@@ -28,8 +28,15 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
 
     msg = MIMEMultipart()
     msg['Subject'] = Subject
-    msg['From'] = From["email"]
     msg['To'] = To
+    msg['Delivered-To'] = From["email"]
+
+    if useAlias==False:
+        msg['From'] =  From["displayName"] + " <"+From["email"] +">"
+    else:
+        msg['From'] = From["displayName"] + " <"+From["alias"] +">"
+
+
 
     if len(ReplyTo) > 0:
         msg.add_header('reply-to', ", ".join(ReplyTo))
