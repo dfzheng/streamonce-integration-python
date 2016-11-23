@@ -57,27 +57,36 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
     server.send_message(msg)
     server.quit()
 
-def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], HTML="", ReplyTo=[], Origin=None, useAlias=False):
-    origin_html = Origin.get_payload()
-    reply_html = HTML
-    compressed_origin_html = '<div class="gmail_extra"><div class="gmail_quote"><blockquote class="gmail_quote" style="margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">'
-    compressed_origin_html += origin_html + '</blockquote></div></div>'
-    new_html = reply_html + compressed_origin_html
-
-    reply_doc = BeautifulSoup(reply_html, 'html.parser')
-    origin_doc = BeautifulSoup(origin_html, 'html.parser')
-
-    reply_text = reply_doc.text
-    origin_text = re.sub('\n', '\n> ', origin_doc.text)
-
-    new_text = reply_text + origin_text
+def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[],TEXT="", HTML="", ReplyTo=[], Origin=None, useAlias=False):
 
     email.charset.add_charset('utf-8', email.charset.SHORTEST, email.charset.QP)
-    html_block = MIMEText(new_html, 'html', 'utf-8')
-    del html_block['Content-Transfer-Encoding']
-    html_block['Content-Transfer-Encoding'] = 'QUOTED-PRINTABLE'
+    new_text = ""
+    new_html = ""
+
+    if TEXT!="" and HTML!="":
+        new_text = TEXT
+        new_html = HTML
+    else :
+        origin_html = Origin.get_payload()
+        reply_html = HTML
+        compressed_origin_html = '<div class="gmail_extra"><div class="gmail_quote"><blockquote class="gmail_quote" style="margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">'
+        compressed_origin_html += origin_html + '</blockquote></div></div>'
+        new_html = reply_html + compressed_origin_html
+
+        reply_doc = BeautifulSoup(reply_html, 'html.parser')
+        origin_doc = BeautifulSoup(origin_html, 'html.parser')
+
+        reply_text = reply_doc.text
+        origin_text = re.sub('\n', '\n> ', origin_doc.text)
+
+        new_text = reply_text + origin_text
+
 
     text_block = MIMEText(new_text, 'plain', _charset='utf-8')
+    html_block = MIMEText(new_html, 'html', 'utf-8')
+
+    del html_block['Content-Transfer-Encoding']
+    html_block['Content-Transfer-Encoding'] = 'QUOTED-PRINTABLE'
 
     print('Sending mail From: %s , Subject: %s' % (From["email"], Subject))
 
