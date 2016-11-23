@@ -30,3 +30,15 @@ pip install --upgrade selenium requests oauth2client apiclient google-api-python
 CnCTester1 is group admin
 
 Only CnCTester4 can use alias to send email
+
+### P.P.S.
+
+open Navigator ( installed with anaconda ), create an new virtual env ( eg. so-testing )
+
+activate virtual env using command, and import requirements
+
+```
+source activate so-testing
+cd $PROJECT_DIR
+pip install -r requirements.txt
+```
