@@ -53,7 +53,7 @@ def SendEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[], Preamb
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(From["email"], From["password"])
+    server.login(From["email"], From["googlePassword"])
     server.send_message(msg)
     server.quit()
 
@@ -120,7 +120,7 @@ def ReplyEmail(Subject="[SO-TEST] Template", From=account["User1"], To=[],TEXT="
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(From["email"], From["password"])
+    server.login(From["email"], From["googlePassword"])
     server.send_message(new_block)
     server.quit()
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     SendEmail(
         Subject="This is from sendMailHelper",
         From=account["User1"],
-        To=["streamonceintegrationtest2" + env["google"]["domainName"]],
+        To=["one-plus@" + env["google"]["domainName"]],
         Preamble="Ok, Ok",
         TEXT="Text Yes",
         HTML="""

@@ -18,7 +18,7 @@ class CheckEmailHelper():
 
         print("Checking Mail of User: %s, Subject: %s" % (user["username"], subject))
 
-        server.login(user["email"], user["password"])
+        server.login(user["email"], user["googlePassword"])
         select_info = server.select_folder('INBOX')
 
         ans = server.gmail_search('to:(%s) subject:(%s)' % (to, subject))
@@ -41,7 +41,7 @@ class CheckEmailHelper():
 
         print("Checking Mail of User: %s, Subject: %s" % (user["username"], subject))
 
-        server.login(user["email"], user["password"])
+        server.login(user["email"], user["googlePassword"])
         select_info = server.select_folder('INBOX')
 
         ans = server.gmail_search('to:(%s) subject:(%s)' % (to, subject))
@@ -64,21 +64,20 @@ class CheckEmailHelper():
 
         print("Checking Mail of User: %s " % user["username"])
 
-        server.login(user["email"], user["password"])
+        server.login(user["email"], user["googlePassword"])
 
         server.select_folder('INBOX')
-        inboxMails = server.gmail_search('in:inbox %s' % (to))
+        inbox_mails = server.gmail_search('in:inbox %s' % (to))
+        server.delete_messages(inbox_mails)
 
         server.select_folder('[Gmail]/Sent Mail')
-        sendMails = server.gmail_search('is:sent %s' % (to))
+        send_mails = server.gmail_search('is:sent %s' % (to))
+        server.delete_messages(send_mails)
 
-        inboxMails.extend(sendMails)
-
-        server.delete_messages(inboxMails)
-
+        server.shutdown()
 
 if __name__ == "__main__":
-    subject = 'SO Test Discussion 1.41'
-    Mails = CheckEmailHelper.findEmailListBySubject(account['User4'], subject, to='streamonceintegrationtest4@' + env["google"]["domainName"])
+    subject = 'Begin test here'
+    Mails = CheckEmailHelper.findEmailListBySubject(account['User1'], subject, to='one-plus@' + env["google"]["domainName"])
     print(Mails)
 

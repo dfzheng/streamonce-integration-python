@@ -66,21 +66,23 @@ class GoogleHelper():
         return resp
 
 if __name__ == "__main__":
-    groupKey = "streamonceintegrationtest4" + '@' + env["google"]["domainName"]
-    memberKey = account["User2"]["email"]
+    groupKey = "test-on-1221" + '@' + env["google"]["domainName"]
+    memberKey = account["jiveAdmin"]["username"]
 
-    print(GoogleHelper.createGroup(groupKey))
+    memberKey = "cnctester5@dev.thoughtworks.com"
 
-    print(GoogleHelper.getGroup(groupKey))
+    # print(GoogleHelper.createGroup(groupKey))
+
+    # print(GoogleHelper.getGroup(groupKey))
 
     print(GoogleHelper.insertMember(groupKey, memberKey))
-
+    #
     print(GoogleHelper.getMemebers(groupKey))
-
-    print(GoogleHelper.deleteMember(groupKey, memberKey))
-
-    time.sleep(5)
-
-    print(GoogleHelper.getMemebers(groupKey))
-
-    print(GoogleHelper.deleteGroup(groupKey))
+    #
+    # print(GoogleHelper.deleteMember(groupKey, memberKey))
+    #
+    # time.sleep(5)
+    #
+    # print(GoogleHelper.getMemebers(groupKey))
+    #
+    # print(GoogleHelper.deleteGroup(groupKey))

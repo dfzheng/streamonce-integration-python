@@ -77,7 +77,8 @@ class jiveHelper:
 
         headers = {
             "Content-Type": "application/json",
-            "X-Jive-Run-As": "userid " + str(user["id"])
+            # "X-Jive-Run-As": "userid " + str(user["id"])
+            "X-Jive-Run-As": "email " + user["email"]
         }
 
         body = {
@@ -90,8 +91,10 @@ class jiveHelper:
             }
         }
 
+        print("placeID:", place["placeID"], ",userID:", user["id"], ",admin:", account["jiveAdmin"]["username"])
+
         r = requests.post(url, headers=headers, json=body, auth=BasicAuth)
-        assert r.status_code == 201
+        assert r.status_code == 201, "result code is %s" % str(r.status_code)
         content = r.json()
         assert title == content['subject'], "Title Created not match"
         assert user['displayName'] == content['author']['displayName'], "User Created not match"
@@ -155,7 +158,8 @@ class jiveHelper:
 
         headers = {
             "Content-Type": "application/json",
-            "X-Jive-Run-As": "userid " + str(user["id"])
+            # "X-Jive-Run-As": "userid " + str(user["id"]),
+            "X-Jive-Run-As": "email " + user["email"],
         }
 
         print(url)
