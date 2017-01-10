@@ -150,10 +150,11 @@ class jiveHelper:
 
 
     @staticmethod
-    def messageOnDiscussion(user, contentID, reply):
+    def messageOnDiscussion(user, contentID, reply, attachments=[]):
         body = {
             "content": {"type": "text/html", "text": reply},
-            "type": "message"
+            "type": "message",
+            "attachments": attachments
         }
 
         url = apiUrl + "/messages/contents/" + contentID
