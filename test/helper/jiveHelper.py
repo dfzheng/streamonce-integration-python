@@ -71,7 +71,8 @@ class jiveHelper:
     <h1>hello discuss</h1>
     <p>Some interesting text to discuss</p>
 </div>
-            """):
+            """,
+            attachments=[]):
         place = jiveHelper.getGroupByName(groupName)
         url = apiUrl + '/places/' + place["placeID"] + "/contents"
 
@@ -88,7 +89,8 @@ class jiveHelper:
             "content" : {
               "type" : "text/html",
               "text" : text
-            }
+            },
+            "attachments": attachments
         }
 
         print("placeID:", place["placeID"], ",userID:", user["id"], ",admin:", account["jiveAdmin"]["username"])
