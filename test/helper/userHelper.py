@@ -55,7 +55,7 @@ class UserHelper():
         WebDriverWait(UserHelper.driver, 20).until(EC.invisibility_of_element_located(locator))
 
     @staticmethod
-    def login(user):
+    def login_okta(user):
         driver = UserHelper.driver
 
         driver.get(env["okta"]["url"])
@@ -68,6 +68,25 @@ class UserHelper():
         UserHelper.find_elem('//*[@id="container"]/div/div[2]/div/div[2]/ul[2]/li[2]/a')
         driver.get(env["okta"]["jiveSSOLoginUrl"])
         time.sleep(15)
+
+    @staticmethod
+    def login_jive(user):
+        driver = UserHelper.driver
+
+        driver.get(env["jive"]["url"])
+        UserHelper.setInput("username", user["username"], name=True)
+        UserHelper.setInput("password", user["password"], name=True)
+        UserHelper.click("#login-submit")
+        time.sleep(15)
+
+
+    @staticmethod
+    def login(user):
+        if env["loginMethod"] == "jive":
+            UserHelper.login_jive(user)
+        elif env["loginMethod"] == "okta":
+            UserHelper.login_okta(user)
+
 
     @staticmethod
     def createGroup(groupName):
