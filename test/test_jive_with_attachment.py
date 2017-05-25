@@ -1,21 +1,22 @@
-from test.helper.jiveHelper import jiveHelper
-from test.helper.CheckEmailHelper import CheckEmailHelper
+import jiveHelper
+import CheckEmailHelper
 import datetime
 from time import sleep
-from test.config import env, account, group
+from config import env, account, group
 import unittest
 import pdb
 
-class AttachmentTest(unittest.TestCase):
+class jiveAttachmentTest(unittest.TestCase):
     def test_shouldHaveEmailNotificationWithAttachment(self):
         subject = 'SO Test Discussion With Attachment ' + datetime.datetime.now().isoformat()
-        # subject = 'SO Test Discussion With Attachment 2017-01-10T14:53:37.027608'
+        # subject = 'SO Test Discussion With Attachment 2017-01-24T14:46:28.384560'
         attachmentName = "attachment1.jpg"
         attachments = [{
             "doUpload": True,
             "name": attachmentName,
             "url": "http://pics.sc.chinaz.com/files/pic/pic9/201508/apic14052.jpg"
       }]
+        # Send discussion on Jive
         content = jiveHelper.createContent(
             groupName=group['groupName'],
             user=account["User2"],
@@ -37,6 +38,8 @@ class AttachmentTest(unittest.TestCase):
         Mail4 = CheckEmailHelper.findEmailBySubject(account["User4"], subject, to=group['groupKey'])
         Mail5 = CheckEmailHelper.findEmailBySubject(account["User5"], subject, to=group['groupKey'])
 
+        pdb.set_trace()     #start debugging
+
         self.assertEqual(Mail1['Subject'], subject)
         self.assertEqual(Mail2['Subject'], subject)
         self.assertEqual(Mail4['Subject'], subject)
@@ -47,7 +50,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(Mail4.get_payload()[0]["Content-Disposition"], 'attachment; filename='+attachmentName)
         self.assertEqual(Mail5.get_payload()[0]["Content-Disposition"], 'attachment; filename='+attachmentName)
 
-    def test_shouldSyncCommentToRestOfGroupMemberWithAttachment(self):
+    def xtest_shouldSyncCommentToRestOfGroupMemberWithAttachment(self):
         subject = 'SO Test Discussion ' + datetime.datetime.now().isoformat()
         # subject = 'SO Test Discussion 2017-01-10T17:26:00.771481'
         content = jiveHelper.createContent(

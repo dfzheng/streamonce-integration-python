@@ -1,15 +1,10 @@
-from test.helper.userHelper import UserHelper
 from test.helper.jiveHelper import jiveHelper
-from test.helper.googleHelper import GoogleHelper
 from test.helper.CheckEmailHelper import CheckEmailHelper
 from test.helper.sendMailHelper import SendEmail, ReplyEmail
-from test.helper.utilHelper import *
 import datetime
 from time import sleep
-from xml.sax.saxutils import escape, unescape
-from test.config import env, account, group
+from config import account, group
 import unittest
-import pdb
 import re
 
 class EmailNotificationTest(unittest.TestCase):

@@ -1,11 +1,11 @@
 import datetime
-import pdb
 import re
+import time
+
+from config import group, account
 from test.helper.CheckEmailHelper import CheckEmailHelper
 from test.helper.jiveHelper import jiveHelper
-from test.config import group, account
 from test.helper.sendMailHelper import ReplyEmail
-import time
 
 replyTEXTTemplate = """Reply at Beginning
 

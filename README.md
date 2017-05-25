@@ -42,3 +42,10 @@ source activate so-testing
 cd $PROJECT_DIR
 pip install -r requirements.txt
 ```
+### add config files
+accounts.json: it need add accounts.json file, you can download it from team AWS and replace current file.
+env.js: the env.js file in team AWS. You need download it and add in project root folder.
+
+### how to debug test
+downlaod jupyter;
+run: jupyter-notebook .

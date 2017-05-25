@@ -1,21 +1,24 @@
+import sys
+sys.path.insert(0,'..')
+import os
 import requests
 from requests.auth import HTTPBasicAuth
-import os
 import json
 import time
 import pdb
 
-with open(os.getcwd() + '/env.json') as json_data:
+directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
+with open(directory + '/env.json') as json_data:
     env = json.load(json_data)
     apiUrl = env["jive"]["apiBaseUrl"]
 
 
-with open(os.getcwd() + '/accounts.json') as json_data:
+with open(directory + '/accounts.json') as json_data:
     account = json.load(json_data)
 
 BasicAuth=HTTPBasicAuth(account["jiveAdmin"]["username"], account["jiveAdmin"]["password"])
 
-class jiveHelper:
+class jiveHelper():
     @staticmethod
     def isOnlyResult(response):
         if len(response.json()["list"]) != 1:
@@ -25,6 +28,7 @@ class jiveHelper:
 
     @staticmethod
     def getGroupByName(groupName):
+
         url = env["jive"]["apiBaseUrl"] + '/search/places?filter=search({0})&filter=nameonly'.format(groupName)
         r = requests.get(url, auth=BasicAuth)
         assert r.status_code == 200, "could not find group"
@@ -37,7 +41,7 @@ class jiveHelper:
         url = env["jive"]["apiBaseUrl"] + '/places/{0}'.format(placeID)
         r = requests.get(url, auth=BasicAuth)
         assert r.status_code == 200, "get group failed with code %d" % (r.status_code)
-        assert r.json()["name"] == groupName
+        assert r.json()["name"].lower() == groupName
         return r.json()
 
     @staticmethod
@@ -117,11 +121,36 @@ class jiveHelper:
     def findContentBySubject(contentSubject):
         url = apiUrl + "/search/contents?filter=search('%s')&filter=subjectonly(true)" % (contentSubject)
         r = requests.get(url, auth=BasicAuth)
-        assert r.status_code == 200
+        assert r.status_code == 200, "responsed code {0}".format(r.status_code)
         if not jiveHelper.isOnlyResult(r):
             print('findContentBySubject has no result or more than one')
             return None
         return r.json()['list'][0]
+
+
+    @staticmethod
+    def getReplybySubject(user=account["jiveAdmin"], contentSubject=""):
+        url = apiUrl + "/search/contents?filter=search('%s')&filter=subjectonly(true)" % (contentSubject)
+        r = requests.get(url, auth=BasicAuth)
+        assert r.status_code == 200
+        if not isOnlyResult(r):
+           print('findContentBySubject has no result or more than one')
+        commentHTML = r.json()['list'][1]['content']['text']
+        comment = BeautifulSoup(commentHTML, 'html.parser').get_text()
+        print (comment)
+        return comment
+
+    # content can only find by non-federated user, not normal account, so remove this function
+    # @staticmethod
+    # def findContentAsUserBySubject(user=account["jiveAdmin"], contentSubject=""):
+    #     url = apiUrl + "/search/contents?filter=search('%s')&filter=subjectonly(true)" % (contentSubject)
+    #     BasicAuth=HTTPBasicAuth(user["username"], user["password"])
+    #     r = requests.get(url, auth=BasicAuth)
+    #     assert r.status_code == 200
+    #     if not jiveHelper.isOnlyResult(r):
+    #         print('findContentBySubject has no result or more than one')
+    #         return None
+    #     return r.json()['list'][0]
 
     @staticmethod
     def findDisussionBySubject(contentSubject):

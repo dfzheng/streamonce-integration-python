@@ -5,10 +5,11 @@ import os, pdb, json
 import time
 import googleapiclient
 
-with open(os.getcwd() + '/env.json') as json_data:
+directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
+with open(directory + '/env.json') as json_data:
     env = json.load(json_data)
 
-with open(os.getcwd() + '/accounts.json') as json_data:
+with open(directory + '/accounts.json') as json_data:
     account = json.load(json_data)
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(env["google"]["keyFile"], env["google"]["scopes"])

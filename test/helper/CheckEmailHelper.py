@@ -3,12 +3,15 @@ import email
 import os, json
 import pdb
 
+# IMAPClient uses IMAPlib module, which is used for mail
+
 HOST = 'imap.gmail.com'
 
-with open(os.getcwd() + '/env.json') as json_data:
+directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
+with open(directory + '/env.json') as json_data:  # os.getcwd() Return the current working directory
     env = json.load(json_data)
 
-with open(os.getcwd() + '/accounts.json') as json_data:
+with open(directory + '/accounts.json') as json_data:
     account = json.load(json_data)
 
 class CheckEmailHelper():
@@ -25,7 +28,7 @@ class CheckEmailHelper():
 
         if len(ans) == 1:
             resp = server.fetch(ans, ['body[]'])
-            msg = email.message_from_bytes(resp[ans[0]][b'BODY[]'])
+            msg = email.message_from_bytes(resp[ans[0]][b'BODY[]'])  #return a message object structure
             server.shutdown()
             return msg
         elif len(ans) == 0:

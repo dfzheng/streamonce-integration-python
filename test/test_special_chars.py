@@ -2,7 +2,7 @@ import datetime
 from time import sleep
 import unittest
 import re
-from test.config import group, account
+from config import group, account
 from test.helper.CheckEmailHelper import CheckEmailHelper
 from test.helper.jiveHelper import jiveHelper
 from test.helper.utilHelper import decodeQP

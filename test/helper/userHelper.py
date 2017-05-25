@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from test.config import env
+from config import env
 
 class UserHelper():
 
@@ -12,7 +12,7 @@ class UserHelper():
 
     @classmethod
     def startDriver(cls):
-        cls.driver = webdriver.Firefox()
+        cls.driver = webdriver.Chrome('/Users/wxji/Documents/Connect/chromedriver')
         cls.driver.implicitly_wait(60)
         cls.driver.set_window_size(1280, 1080)
 
