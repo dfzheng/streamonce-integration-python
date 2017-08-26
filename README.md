@@ -8,6 +8,11 @@ This repo is use to test if the streamonce worked about sync discussion between 
 bash testRunner.sh
 ```
 
+### How to debug test
+download jupyter;
+run:
+`jupyter-notebook .`
+
 ### Requirements
 
 ### Install pyenv
@@ -54,12 +59,9 @@ Install dependencies in virtual environment
 pip install -r requirements.txt
 ```
 
-### fill config files
+### Fill in config files
 * accounts.json: credential information for test user accounts. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
 * env.json: environment configuration file. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
 * streamonce-testing-c911366674f7.json: google api authorization private key file. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
 
-### how to debug test
-download jupyter;
-run:
-```jupyter-notebook .```
+
