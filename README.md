@@ -54,27 +54,12 @@ Install dependencies in virtual environment
 pip install -r requirements.txt
 ```
 
-### P.S.
-
-CnCTester1 is group admin
-
-Only CnCTester4 can use alias to send email
-
-### P.P.S.
-
-open Navigator ( installed with anaconda ), create an new virtual env ( eg. so-testing )
-
-activate virtual env using command, and import requirements
-
-```
-source activate so-testing
-cd $PROJECT_DIR
-pip install -r requirements.txt
-```
-### add config files
-accounts.json: it need add accounts.json file, you can download it from team AWS and replace current file.
-env.js: the env.js file in team AWS. You need download it and add in project root folder.
+### fill config files
+* accounts.json: credential information for test user accounts. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
+* env.json: environment configuration file. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
+* streamonce-testing-c911366674f7.json: google api authorization private key file. you can get more info in AWS/S3/tw-jive-config/streamonce-automation-test
 
 ### how to debug test
-downlaod jupyter;
-run: jupyter-notebook .
+download jupyter;
+run:
+```jupyter-notebook .```
