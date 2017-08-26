@@ -4,17 +4,17 @@ from apiclient.discovery import build
 import os, pdb, json
 import time
 import googleapiclient
+import sys
+sys.path.insert(0,'../..')
 
-directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
-with open(directory + '/env.json') as json_data:
+with open('env.json') as json_data:
     env = json.load(json_data)
 
-with open(directory + '/accounts.json') as json_data:
+with open('accounts.json') as json_data:
     account = json.load(json_data)
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(env["google"]["keyFile"], env["google"]["scopes"])
-
-delegated_credentials = credentials.create_delegated(env["google"]["delegate_user"])
+credentials = ServiceAccountCredentials.from_json_keyfile_name(env["googleAuthData"]["keyFile"], env["googleAuthData"]["scopes"])
+delegated_credentials = credentials.create_delegated(env["googleAuthData"]["delegate_user"])
 
 http_auth = delegated_credentials.authorize(Http())
 

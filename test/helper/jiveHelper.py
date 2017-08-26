@@ -1,19 +1,18 @@
-import sys
-sys.path.insert(0,'..')
 import os
 import requests
 from requests.auth import HTTPBasicAuth
 import json
 import time
 import pdb
+import sys
+sys.path.insert(0,'../..')
 
-directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
-with open(directory + '/env.json') as json_data:
+with open('env.json') as json_data:
     env = json.load(json_data)
     apiUrl = env["jive"]["apiBaseUrl"]
 
 
-with open(directory + '/accounts.json') as json_data:
+with open('accounts.json') as json_data:
     account = json.load(json_data)
 
 BasicAuth=HTTPBasicAuth(account["jiveAdmin"]["username"], account["jiveAdmin"]["password"])
@@ -82,7 +81,6 @@ class jiveHelper():
 
         headers = {
             "Content-Type": "application/json",
-            # "X-Jive-Run-As": "userid " + str(user["id"])
             "X-Jive-Run-As": "email " + user["email"]
         }
 

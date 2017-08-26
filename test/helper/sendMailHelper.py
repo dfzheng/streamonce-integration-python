@@ -20,11 +20,10 @@ from bs4 import BeautifulSoup
 
 HOST = 'imap.gmail.com'
 
-directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
-with open(directory + '/env.json') as json_data:  # os.getcwd() Return the current working directory
+with open('env.json') as json_data:  # os.getcwd() Return the current working directory
     env = json.load(json_data)
 
-with open(directory + '/accounts.json') as json_data:
+with open('accounts.json') as json_data:
     account = json.load(json_data)
 
 

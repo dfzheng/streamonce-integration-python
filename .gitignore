@@ -1,9 +1,13 @@
 .idea
 *.p12
-streamonce-testing-c911366674f7.json
 *.pyc
 .ipynb_checkpoints
 test/.ipynb_checkpoints
 .DS_Store
 test/.DS_Store
 test/example/.DS_Store
+accounts.sample.json
+env.sample.json
+chromedriver
+streamonce-testing-c911366674f7.sample.json
+venv/

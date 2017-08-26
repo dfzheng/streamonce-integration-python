@@ -10,19 +10,48 @@ bash testRunner.sh
 
 ### Requirements
 
-This Repo is running in python3, can use [ANACONDA](https://www.continuum.io/ managed the python version
-
-After download ANACONDA, should install it with command
+### Install pyenv
 
 ```
-bash Anaconda3-4.2.0-MacOSX-x86_64.sh
+curl -L https://github.com/pyenv/pyenv-installer | bash
 ```
 
-use pip to install all the dependency
+And the followings to `~/.zshrc`
 
 ```
-pip install --upgrade selenium requests oauth2client apiclient google-api-python-client imapclient bs4
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
 
+And then re-open the terminal.
+
+### Install Python-2.7.13
+
+```
+pyenv install 2.7.13
+```
+
+### Install virtualenv
+```
+pip install virtualenv
+```
+
+### Create and activate virtual environment
+
+```
+virtualenv venv
+source venv/bin/activate
+```
+
+Then every time when open a new terminal, virtualenv should be activated by
+```
+source venv/bin/activate
+```
+
+Install dependencies in virtual environment
+```
+pip install -r requirements.txt
 ```
 
 ### P.S.

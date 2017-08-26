@@ -2,16 +2,17 @@ from imapclient import IMAPClient
 import email
 import os, json
 import pdb
+import sys
+sys.path.insert(0,'../..')
 
 # IMAPClient uses IMAPlib module, which is used for mail
 
 HOST = 'imap.gmail.com'
 
-directory ="/Users/wxji/Documents/Connect/streamonce-integration-python"
-with open(directory + '/env.json') as json_data:  # os.getcwd() Return the current working directory
+with open('env.json') as json_data:
     env = json.load(json_data)
 
-with open(directory + '/accounts.json') as json_data:
+with open('accounts.json') as json_data:
     account = json.load(json_data)
 
 class CheckEmailHelper():

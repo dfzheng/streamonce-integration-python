@@ -12,7 +12,7 @@ class UserHelper():
 
     @classmethod
     def startDriver(cls):
-        cls.driver = webdriver.Chrome('/Users/wxji/Documents/Connect/chromedriver')
+        cls.driver = webdriver.Chrome('/Users/twer/Downloads/chromedriver')
         cls.driver.implicitly_wait(60)
         cls.driver.set_window_size(1280, 1080)
 
@@ -56,6 +56,7 @@ class UserHelper():
 
     @staticmethod
     def login_okta(user):
+        print('===========login through okta============')
         driver = UserHelper.driver
 
         driver.get(env["okta"]["url"])
@@ -78,7 +79,6 @@ class UserHelper():
         UserHelper.setInput("password", user["password"], name=True)
         UserHelper.click("#login-submit")
         time.sleep(15)
-
 
     @staticmethod
     def login(user):

@@ -9,54 +9,54 @@
     "username": "",
     "password": ""
   },
-  "User1":{
-    "username": "",
-    "email": "",
+  "User1": {
+    "username": "cnctester1@dev.thoughtworks.com",
+    "email": "cnctester1@dev.thoughtworks.com",
     "password": "",
     "googlePassword": "",
     "twoStep": "",
-    "id": "",
-    "displayName": "",
+    "id": "2028",
+    "displayName": "CNC1 Tester1",
     "alias": ""
   },
-  "User2":{
-    "username": "",
-    "email": "",
+  "User2": {
+    "username": "cnctester2@dev.thoughtworks.com",
+    "email": "cnctester2@dev.thoughtworks.com",
     "password": "",
     "googlePassword": "",
     "twoStep": "",
-    "id": "",
-    "displayName": "",
+    "id": "2029",
+    "displayName": "CNC2 Tester2",
     "alias": ""
   },
-  "User4":{
-    "username": "",
-    "email": "",
+  "User5": {
+    "username": "cnctester5@dev.thoughtworks.com",
+    "email": "cnctester5@dev.thoughtworks.com",
     "password": "",
     "googlePassword": "",
     "twoStep": "",
-    "id": "",
-    "displayName": "",
-    "alias": ""
+    "id": "2017",
+    "displayName": "cnc tester5",
+    "alias": "so-tester5@dev.thoughtworks.com"
   },
-  "User3":{
-    "username": "",
-    "email": "",
+  "User3": {
+    "username": "cnctester3@dev.thoughtworks.com",
+    "email": "cnctester3@dev.thoughtworks.com",
     "password": "",
     "googlePassword": "",
     "twoStep": "",
-    "id": "",
-    "displayName": "",
-    "alias": ""
+    "id": "2018",
+    "displayName": "cnc tester3",
+    "alias": "so.tester3@dev.thoughtworks.com"
   },
-  "User5":{
-    "username": "",
-    "email": "",
+  "User4": {
+    "username": "cnctester4@dev.thoughtworks.com",
+    "email": "cnctester4@dev.thoughtworks.com",
     "password": "",
     "googlePassword": "",
     "twoStep": "",
-    "id": "",
-    "displayName": "",
-    "alias": ""
+    "id": "2019",
+    "displayName": "cnc tester4",
+    "alias": "so-tester4@dev.thoughtworks.com"
   }
 }
