@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common,desired_capabilities import DesiredCapabilities
 from config import env
 
 class UserHelper():
@@ -12,7 +13,7 @@ class UserHelper():
 
     @classmethod
     def startDriver(cls):
-        cls.driver = webdriver.Chrome('/Users/twer/Downloads/chromedriver')
+        cls.driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
         cls.driver.implicitly_wait(60)
         cls.driver.set_window_size(1280, 1080)
 
