@@ -13,7 +13,7 @@ class UserHelper():
 
     @classmethod
     def startDriver(cls):
-        cls.driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
+        cls.driver = webdriver.Remote("http://0.0.0.0:4444/wd/hub", DesiredCapabilities.CHROME)
         cls.driver.implicitly_wait(60)
         cls.driver.set_window_size(1280, 1080)
 

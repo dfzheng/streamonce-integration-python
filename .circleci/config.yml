@@ -7,10 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Requirements
+          name: Install Requirements & run test
           command: |
             pip install virtualenv
             virtualenv venv
             source venv/bin/activate
             pip install -r requirements.txt
-      - run: bash testRunner.sh
+            bash testRunner.sh
