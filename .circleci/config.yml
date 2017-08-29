@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-python:
+  build:
     docker:
       - image: circleci/python:2.7.13
       - image: selenium/standalone-chrome:latest
