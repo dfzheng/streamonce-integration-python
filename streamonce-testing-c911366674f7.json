@@ -1,7 +1,7 @@
 {
   "type": "service_account",
   "project_id": "streamonce-testing",
-  "private_key": "",
+  " private_key": "",
   "private_key_id": "",
   "client_email": "streamonce-testing@appspot.gserviceaccount.com",
   "client_id": "107495441022329297030",
