@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build-python:
+    docker:
+      - image: circleci/python:2.7.13
+      - image: selenium/standalone-chrome:latest
+    steps:
+      - checkout
+      - run:
+          name: Install Requirements
+          command: pip install -r requirements.txt
+      - run: bash testRunner.sh
