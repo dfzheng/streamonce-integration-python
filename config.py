@@ -34,7 +34,7 @@ account["User5"]["twoStep"] = os.environ.get("SECURITY_ANSWER")
 
 
 group = {}
-group['groupName'] = 'taohui-automation'
+group['groupName'] = 'dafu-automation'
 group['groupKey'] = group['groupName'] + '@' + env['google']['domainName']
 group['groupAdmin'] = account["User1"]
 group['members'] = [account["User2"], account["User5"]]
