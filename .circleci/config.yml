@@ -5,7 +5,6 @@ jobs:
       - image: circleci/python:2.7.13
       - image: selenium/standalone-chrome:latest
     steps:
-      - checkout
       - run:
          name: Install Requirements & run test
          command: |

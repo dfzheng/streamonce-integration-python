@@ -5,6 +5,7 @@ import os, pdb, json
 import time
 import googleapiclient
 import sys
+import base64
 sys.path.insert(0,'../..')
 
 with open('env.json') as json_data:
@@ -15,10 +16,14 @@ with open('accounts.json') as json_data:
 
 #credentials = ServiceAccountCredentials.from_json_keyfile_name(env["googleAuthData"]["keyFile"], env["googleAuthData"]["scopes"])
 
+google_private_key = os.getenv('GOOGLE_PRIVATE_KEY_ENCODED')
+decoded_google_private_key = google_private_key.decode('base64')
+print(decoded_google_private_key)
+
 oauth_fields = {
     "type": "service_account",
     "project_id": "streamonce-testing",
-    "private_key": os.getenv('GOOGLE_PRIVATE_KEY'),
+    "private_key": decoded_google_private_key,
     "private_key_id": os.getenv('GOOGLE_PRIVATE_KEY_ID'),
     "client_email": "streamonce-testing@appspot.gserviceaccount.com",
     "client_id": "107495441022329297030",
