@@ -18,7 +18,6 @@ with open('accounts.json') as json_data:
 
 google_private_key = os.getenv('GOOGLE_PRIVATE_KEY_ENCODED')
 decoded_google_private_key = google_private_key.decode('base64')
-print(decoded_google_private_key)
 
 oauth_fields = {
     "type": "service_account",
