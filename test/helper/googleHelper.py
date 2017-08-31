@@ -13,7 +13,23 @@ with open('env.json') as json_data:
 with open('accounts.json') as json_data:
     account = json.load(json_data)
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(env["googleAuthData"]["keyFile"], env["googleAuthData"]["scopes"])
+#credentials = ServiceAccountCredentials.from_json_keyfile_name(env["googleAuthData"]["keyFile"], env["googleAuthData"]["scopes"])
+
+oauth_fields = {
+    "type": "service_account",
+    "project_id": "streamonce-testing",
+    "private_key": os.getenv('GOOGLE_PRIVATE_KEY'),
+    "private_key_id": os.getenv('GOOGLE_PRIVATE_KEY_ID'),
+    "client_email": "streamonce-testing@appspot.gserviceaccount.com",
+    "client_id": "107495441022329297030",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/streamonce-testing%40appspot.gserviceaccount.com"
+}
+
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(oauth_fields, scopes=env["googleAuthData"]["scopes"])
+
 delegated_credentials = credentials.create_delegated(env["googleAuthData"]["delegate_user"])
 
 http_auth = delegated_credentials.authorize(Http())
